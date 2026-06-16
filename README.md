@@ -2,16 +2,20 @@
 
 > **AI-Powered Traffic Intelligence & Operations Platform**
 
-Event AI is an advanced, enterprise-grade command center application built for urban traffic operations and emergency response in Bengaluru. Inspired by tools like Palantir Foundry and Datadog, it provides real-time geospatial visualization, AI-driven congestion prediction, tactical deployment recommendations, and simulation modeling to actively mitigate urban traffic delays.
+Event AI is an advanced, enterprise-grade command center application built for operations and emergency response in Bengaluru.
 
 ---
 
 ## ✨ Key Features
 
-- **Spatial Visualization Map**: Real-time Interactive mapping with hotspots, epicenters, optimal police stations, and multi-layer rendering (Dark Mode, Google Streets, Satellite, Terrain).
+- **Spatial Visualization Map**: Real-time Interactive mapping with hotspots, epicenters, optimal police stations, and multi-layer rendering .
+
 - **AI Commander Copilot**: Generates automated tactical operations directives, risk evaluations, and exact officer/barricade deployment counts based on incident parameters.
+
 - **Delay Mitigation Simulation**: Models the statistical impact of "No Action" vs "Diversions" vs "Full Response" to visualize efficiency gains.
+
 - **Impact Zone Analysis**: Calculates affected vehicular counts, radial impact, and dynamically renders polygon bounds of traffic disruptions.
+
 - **Historical Context**: Tracks baseline incident distribution by cause and geographic zone to provide operational context.
 
 ---
@@ -79,7 +83,6 @@ npm run dev
 
 ## 📸 Demo Gallery
 
-*(Replace the placeholder image paths below with actual screenshots of the application)*
 
 | Tactical Dashboard Overview | Spatial Map & Analytics |
 |:---:|:---:|
@@ -88,7 +91,7 @@ npm run dev
 
 <br/>
 
-| ADvisory Section | Mitigation Simulation Modeling |
+| Advisory Section | Mitigation Simulation Modeling |
 |:---:|:---:|
 | ![Advisory Section](frontend/public/advisory.png) | ![Simulation](frontend/public/optim.png) |
 | *Automated deployment protocols and risk assessments.* | *Visualizing the efficiency of dispatching units vs no action.* |
