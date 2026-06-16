@@ -100,80 +100,46 @@ export const PredictionForm = ({ onSubmit, isLoading }: PredictionFormProps) => 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-3xl p-6 sm:p-8 flex flex-col justify-between"
-      style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
+      style={{
+        borderRadius: 'var(--radius-card)',
+        padding: '1.75rem',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1.5rem',
+      }}
     >
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-blue-500/10 border border-blue-500/20">
-          <BrainCircuit size={18} color="#3B82F6" />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{
+          width: '48px', height: '48px', borderRadius: 'var(--radius-md)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)',
+          flexShrink: 0,
+        }}>
+          <BrainCircuit size={22} color="#3B82F6" />
         </div>
         <div>
-          <h2 className="text-sm font-bold text-white">Predict Event Risk</h2>
-          <p className="text-xs text-gray-400">Configure event parameters for AI analysis</p>
+          <div style={{ fontSize: 'var(--font-md)', fontWeight: 800, color: 'var(--text)' }}>
+            Incident Parameters
+          </div>
+          <div style={{ fontSize: 'var(--font-xs)', color: 'var(--muted)', marginTop: '0.2rem' }}>
+            Configure event details for AI response planning
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <CustomSelect
-          label="Event Type"
-          options={EVENT_TYPES}
-          value={form.event_type}
-          onChange={set('event_type')}
-        />
-        <CustomSelect
-          label="Event Cause"
-          options={EVENT_CAUSES}
-          value={form.event_cause}
-          onChange={set('event_cause')}
-          searchable
-        />
-        <CustomSelect
-          label="Road Closure Required"
-          options={ROAD_CLOSURE}
-          value={form.requires_road_closure}
-          onChange={set('requires_road_closure')}
-        />
-        <CustomSelect
-          label="Priority"
-          options={PRIORITIES}
-          value={form.priority}
-          onChange={set('priority')}
-        />
-        <CustomSelect
-          label="Corridor"
-          options={CORRIDORS}
-          value={form.corridor}
-          onChange={set('corridor')}
-          searchable
-        />
-        <CustomSelect
-          label="Police Station"
-          options={POLICE_STATIONS}
-          value={form.police_station}
-          onChange={set('police_station')}
-          searchable
-        />
-        <CustomSelect
-          label="Hour of Day"
-          options={HOURS}
-          value={String(form.hour)}
-          onChange={set('hour')}
-          searchable
-        />
-        <CustomSelect
-          label="Day of Week"
-          options={DAYS}
-          value={String(form.day_of_week)}
-          onChange={set('day_of_week')}
-        />
-        <div className="sm:col-span-2">
-          <CustomSelect
-            label="Month"
-            options={MONTHS}
-            value={String(form.month)}
-            onChange={set('month')}
-          />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+        <CustomSelect label="Event Type" options={EVENT_TYPES} value={form.event_type} onChange={set('event_type')} />
+        <CustomSelect label="Event Cause" options={EVENT_CAUSES} value={form.event_cause} onChange={set('event_cause')} searchable />
+        <CustomSelect label="Road Closure" options={ROAD_CLOSURE} value={form.requires_road_closure} onChange={set('requires_road_closure')} />
+        <CustomSelect label="Priority" options={PRIORITIES} value={form.priority} onChange={set('priority')} />
+        <CustomSelect label="Corridor" options={CORRIDORS} value={form.corridor} onChange={set('corridor')} searchable />
+        <CustomSelect label="Police Station" options={POLICE_STATIONS} value={form.police_station} onChange={set('police_station')} searchable />
+        <CustomSelect label="Hour of Day" options={HOURS} value={String(form.hour)} onChange={set('hour')} searchable />
+        <CustomSelect label="Day of Week" options={DAYS} value={String(form.day_of_week)} onChange={set('day_of_week')} />
+        <div style={{ gridColumn: '1 / -1' }}>
+          <CustomSelect label="Month" options={MONTHS} value={String(form.month)} onChange={set('month')} />
         </div>
       </div>
 
@@ -182,25 +148,32 @@ export const PredictionForm = ({ onSubmit, isLoading }: PredictionFormProps) => 
         disabled={isLoading}
         whileHover={{ scale: isLoading ? 1 : 1.01 }}
         whileTap={{ scale: isLoading ? 1 : 0.98 }}
-        className="mt-6 w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-semibold text-sm transition-all cursor-pointer"
         style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
+          padding: '1rem 2rem',
+          borderRadius: 'var(--radius-md)',
+          fontWeight: 700,
+          fontSize: 'var(--font-sm)',
+          letterSpacing: '0.06em',
+          textTransform: 'uppercase',
           background: isLoading
             ? 'rgba(59,130,246,0.4)'
             : 'linear-gradient(135deg, #3B82F6, #6366F1)',
           color: 'white',
           border: 'none',
-          boxShadow: isLoading ? 'none' : '0 4px 24px rgba(59,130,246,0.25)',
+          cursor: isLoading ? 'not-allowed' : 'pointer',
+          boxShadow: isLoading ? 'none' : '0 4px 24px rgba(59,130,246,0.3)',
         }}
       >
         {isLoading ? (
           <>
-            <Loader2 size={16} className="animate-spin" />
-            Analyzing Event...
+            <Loader2 size={18} className="animate-spin" />
+            Analyzing Incident...
           </>
         ) : (
           <>
-            <Send size={15} />
-            Run AI Prediction
+            <Send size={16} />
+            Generate Response Plan
           </>
         )}
       </motion.button>

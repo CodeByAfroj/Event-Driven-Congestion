@@ -25,6 +25,21 @@ import { SimulationChart } from '@/components/charts/SimulationChart';
 import { formatHour } from '@/utils/formatters';
 import type { PredictRequest } from '@/types';
 
+
+/* COMMAND CENTER UPGRADE */
+const MissionStatusBanner = ({prediction}:any) => (
+  <div style={{
+    borderRadius:'32px',padding:'2rem',
+    background:'linear-gradient(135deg, rgba(15,23,42,.95), rgba(30,41,59,.92))',
+    border:'1px solid rgba(255,255,255,.08)', marginBottom:'2rem'
+  }}>
+    <div style={{color:'#ef4444',fontWeight:800}}>ACTIVE INCIDENT</div>
+    <h1 style={{fontSize:'3rem',fontWeight:900}}>
+      {prediction?.event_cause || 'Vehicle Breakdown'}
+    </h1>
+  </div>
+);
+
 /* ────────────────────────────────────────────────────────────
    SKELETON
 ──────────────────────────────────────────────────────────── */
@@ -272,12 +287,12 @@ export const Dashboard = () => {
             color: 'var(--text)',
             lineHeight: 1.05,
           }}>
-            Traffic Intelligence<br />
+            Traffic Operations<br />
             <span style={{
               background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-            }}>Operations Center</span>
+            }}>Command Center</span>
           </h1>
 
           <p style={{
@@ -343,8 +358,8 @@ export const Dashboard = () => {
         <AnimatePresence mode="wait">
           {prediction ? (
             <Section
-              title="AI Commander Operations Briefing"
-              subtitle="Real-time incident response copilot dispatch recommendation"
+              title="AI COMMANDER"
+              subtitle="Operational Decision Briefing"
               icon={<Activity size={20} />}
             >
               <CommanderCard commander={prediction.commander} />
@@ -394,8 +409,8 @@ export const Dashboard = () => {
 
         {/* ── MAP + FORM (HERO) ── */}
         <Section
-          title="Spatial Visualization & Control"
-          subtitle="Hotspot mapping, impact zones, and prediction terminal"
+          title="Impact Map"
+          subtitle="Operational impact visualization and response coordination"
           icon={<Layers size={20} />}
           delay={0.1}
         >
