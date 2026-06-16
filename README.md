@@ -83,14 +83,14 @@ npm run dev
 
 | Tactical Dashboard Overview | Spatial Map & Analytics |
 |:---:|:---:|
-| ![Dashboard Overview](https://via.placeholder.com/600x350/07090F/3B82F6?text=Dashboard+Overview+Screenshot) | ![Map Analytics](https://via.placeholder.com/600x350/07090F/10B981?text=Map+Analytics+Screenshot) |
+| ![Dashboard Overview](frontend/public/home.png) | ![Map Analytics](frontend/public/map.png) |
 | *High-level view of active operations and historic KPIs.* | *Multi-layer geospatial tracking of congestion epicenters.* |
 
 <br/>
 
-| AI Commander Copilot | Mitigation Simulation Modeling |
+| ADvisory Section | Mitigation Simulation Modeling |
 |:---:|:---:|
-| ![AI Commander](https://via.placeholder.com/600x350/07090F/F59E0B?text=AI+Commander+Screenshot) | ![Simulation](https://via.placeholder.com/600x350/07090F/EF4444?text=Simulation+Screenshot) |
+| ![Advisory Section](frontend/public/advisory.png) | ![Simulation](frontend/public/optim.png) |
 | *Automated deployment protocols and risk assessments.* | *Visualizing the efficiency of dispatching units vs no action.* |
 
 ---
