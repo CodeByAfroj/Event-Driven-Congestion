@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("../training/event.csv")
+df = pd.read_csv("./event.csv")
 
 
 def get_hotspots(top_n=15):

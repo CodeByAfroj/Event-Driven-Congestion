@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-df = pd.read_csv("../training/event.csv")
+df = pd.read_csv("./event.csv")
 
 
 def normalize(text):
