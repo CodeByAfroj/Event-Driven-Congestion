@@ -25,51 +25,56 @@ export const WhyAIRecommended = ({ prediction }: { prediction: PredictResponse }
       style={{
         borderRadius: 'var(--radius-card)',
         border: '1px solid var(--border)',
-        background: 'var(--bg-card)',
+        background: 'linear-gradient(145deg, var(--bg-card) 0%, rgba(16, 185, 129, 0.03) 100%)',
         padding: '2rem',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <SectionLabel>Why AI Recommended This</SectionLabel>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem', alignItems: 'center' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem' }}>
-          {stats.map((s, i) => (
-            <div key={i} style={{
-              padding: '1rem 1.25rem', borderRadius: 'var(--radius-lg)',
-              background: 'var(--bg-raised)', border: '1px solid var(--border-bright)',
-            }}>
-              <div style={{ fontSize: 'var(--font-xs)', color: 'var(--muted)', fontWeight: 600, marginBottom: '0.3rem' }}>{s.label}</div>
-              <div style={{ fontSize: 'var(--font-md)', fontWeight: 900, color: s.color }}>{s.value}</div>
-            </div>
-          ))}
-        </div>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', marginTop: '1.5rem' }}>
+        <div className="grid-ai-container" style={{ width: '100%' }}>
+          <div className="grid-2col" style={{ flex: 1, gap: '1rem' }}>
+            {stats.map((s, i) => (
+              <div key={i} style={{
+                padding: '1.25rem', borderRadius: 'var(--radius-lg)',
+                background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-bright)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
+              }}>
+                <div style={{ fontSize: 'var(--font-xs)', color: 'var(--muted)', fontWeight: 600, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
+                <div style={{ fontSize: 'var(--font-lg)', fontWeight: 900, color: s.color }}>{s.value}</div>
+              </div>
+            ))}
+          </div>
 
         {/* Circular confidence */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
-          <svg width="132" height="132" viewBox="0 0 132 132">
-            <circle cx="66" cy="66" r="54" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="10" />
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="66" fill="none" stroke="rgba(16,185,129,0.1)" strokeWidth="12" />
             <motion.circle
-              cx="66" cy="66" r="54" fill="none" stroke="#10B981" strokeWidth="10"
-              strokeLinecap="round" strokeDasharray={circumference}
-              initial={{ strokeDashoffset: circumference }}
-              animate={{ strokeDashoffset: offset }}
+              cx="80" cy="80" r="66" fill="none" stroke="#10B981" strokeWidth="12"
+              strokeLinecap="round" strokeDasharray={2 * Math.PI * 66}
+              initial={{ strokeDashoffset: 2 * Math.PI * 66 }}
+              animate={{ strokeDashoffset: (2 * Math.PI * 66) - (confidence / 100) * (2 * Math.PI * 66) }}
               transition={{ duration: 1.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              style={{ transform: 'rotate(-90deg)', transformOrigin: '66px 66px' }}
+              style={{ transform: 'rotate(-90deg)', transformOrigin: '80px 80px' }}
             />
-            <text x="66" y="66" textAnchor="middle" dominantBaseline="middle"
-              style={{ fill: '#10B981', fontSize: '24px', fontWeight: '900', fontFamily: 'Inter, sans-serif' }}>
+            <text x="80" y="78" textAnchor="middle" dominantBaseline="middle"
+              style={{ fill: '#10B981', fontSize: '32px', fontWeight: '900', fontFamily: 'Inter, sans-serif' }}>
               {confidence}%
             </text>
-            <text x="66" y="84" textAnchor="middle" dominantBaseline="middle"
-              style={{ fill: '#64748B', fontSize: '9px', fontWeight: '700', fontFamily: 'Inter, sans-serif', letterSpacing: '0.1em' }}>
+            <text x="80" y="100" textAnchor="middle" dominantBaseline="middle"
+              style={{ fill: '#64748B', fontSize: '10px', fontWeight: '700', fontFamily: 'Inter, sans-serif', letterSpacing: '0.12em' }}>
               CONFIDENCE
             </text>
           </svg>
-          <div style={{ fontSize: 'var(--font-xs)', color: 'var(--muted)', fontWeight: 600, textAlign: 'center' }}>
-            AI Recommendation<br />Accuracy Score
+          <div style={{ fontSize: 'var(--font-sm)', color: 'var(--text)', fontWeight: 700, textAlign: 'center', marginTop: '0.5rem' }}>
+            AI Recommendation<br /><span style={{ color: 'var(--muted)' }}>Accuracy Score</span>
           </div>
         </div>
       </div>
+      
     </motion.div>
   );
 };

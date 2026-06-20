@@ -6,9 +6,9 @@ import { Tag } from './Tag';
 export const MissionStatusBanner = ({ prediction }: { prediction?: PredictResponse }) => {
 
   const risk =
-    prediction.risk === 2
+    prediction?.risk === 2
       ? 'High'
-      : prediction.risk === 1
+      : prediction?.risk === 1
         ? 'Medium'
         : 'Low';
   const riskColor = getRiskColor(risk);
@@ -84,12 +84,8 @@ export const MissionStatusBanner = ({ prediction }: { prediction?: PredictRespon
       </div>
 
       {/* Main content */}
-      <div style={{
+      <div className={isLive ? 'banner-grid-live' : 'banner-grid'} style={{
         padding: '2rem 2rem 2.25rem',
-        display: 'grid',
-        gridTemplateColumns: isLive ? '1fr auto 1fr auto 1fr' : '1fr',
-        gap: '0',
-        alignItems: 'center',
       }}>
         {/* Event type */}
         <div style={{ padding: '0 1.5rem 0 0.5rem' }}>
@@ -120,13 +116,10 @@ export const MissionStatusBanner = ({ prediction }: { prediction?: PredictRespon
 
         {isLive && (
           <>
-            <div style={{ width: '1px', height: '72px', background: 'var(--border)' }} />
+            <div className="banner-divider" />
 
             {/* Key metrics strip */}
-            <div style={{
-              display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '0', padding: '0 1.5rem',
-            }}>
+            <div className="banner-stats-grid" style={{ padding: '0 1.5rem' }}>
               {[
                 { label: 'Affected Vehicles', value: vehicles.toLocaleString(), unit: 'units', color: '#F59E0B' },
                 { label: 'Impact Radius', value: `${radius}`, unit: 'km', color: '#EF4444' },
@@ -147,14 +140,14 @@ export const MissionStatusBanner = ({ prediction }: { prediction?: PredictRespon
               ))}
             </div>
 
-            <div style={{ width: '1px', height: '72px', background: 'var(--border)' }} />
+            <div className="banner-divider" />
 
             {/* Outcome */}
-            <div style={{ padding: '0 0.5rem 0 1.5rem', textAlign: 'right' }}>
+            <div className="banner-outcome">
               <div style={{ fontSize: 'var(--font-xs)', fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
                 Post-Deployment Delay
               </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', justifyContent: 'flex-end' }}>
+              <div className="banner-outcome-val" style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
                 <span style={{ fontSize: 'var(--font-2xl)', fontWeight: 900, color: '#10B981' }}>{mitigated}</span>
                 <span style={{ fontSize: 'var(--font-sm)', color: 'var(--muted)' }}>min</span>
               </div>

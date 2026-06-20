@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   MapContainer, TileLayer, Marker, Popup, Circle,
   Polygon, Polyline, useMap
@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { Hotspot, ImpactAnalysis } from '@/types';
-import { Check, Layers as LayersIcon, Map as MapIcon, Maximize2, Crosshair, RotateCcw } from 'lucide-react';
+import { Check, Layers as LayersIcon, Map as MapIcon, Maximize2, Crosshair, RotateCcw, Minimize2 } from 'lucide-react';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -63,10 +63,10 @@ const MapUpdater = ({ center, zoom }: { center: [number, number]; zoom: number }
 };
 
 const MAP_STYLES = {
-  dark:      { name: 'Command Center Dark', url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' },
-  street:    { name: 'Google Streets',      url: 'http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}' },
-  hybrid:    { name: 'Google Hybrid',       url: 'http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}' },
-  satellite: { name: 'Google Satellite',    url: 'http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}' },
+  dark: { name: 'Command Center Dark', url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' },
+  street: { name: 'Google Streets', url: 'http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}' },
+  hybrid: { name: 'Google Hybrid', url: 'http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}' },
+  satellite: { name: 'Google Satellite', url: 'http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}' },
 };
 
 interface TrafficMapProps {
@@ -84,15 +84,56 @@ export const TrafficMap = ({ hotspots = [], impact, policeStationName }: Traffic
     alternativeRoute: true,
   });
 
-  const [mapStyle, setMapStyle] = useState<keyof typeof MAP_STYLES>('dark');
+  const [mapStyle, setMapStyle] = useState<keyof typeof MAP_STYLES>('street');
   const [panelOpen, setPanelOpen] = useState(false);
+  const [map, setMap] = useState<L.Map | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+        setPanelOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const hasImpact = !!impact?.center?.latitude;
   const center: [number, number] = hasImpact
     ? [impact!.center.latitude, impact!.center.longitude]
     : hotspots.length > 0
-    ? [hotspots[0].latitude, hotspots[0].longitude]
-    : [12.9716, 77.5946];
+      ? [hotspots[0].latitude, hotspots[0].longitude]
+      : [12.9716, 77.5946];
+
+  const defaultZoom = hasImpact ? 13 : 12;
+
+  const handleCenter = () => {
+    map?.setView(center, defaultZoom, { animate: true });
+  };
+
+  const handleReset = () => {
+    setLayers({
+      hotspots: true,
+      impactZone: true,
+      impactPolygon: true,
+      policeStation: true,
+      alternativeRoute: true,
+    });
+    setMapStyle('street');
+    map?.setView(center, defaultZoom, { animate: true });
+  };
+
+  const handleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+    setTimeout(() => {
+      map?.invalidateSize();
+    }, 300);
+  };
 
   const polygonPositions: [number, number][] = (impact?.polygon || []).map(
     ([lat, lng]) => [lat, lng] as [number, number]
@@ -100,22 +141,22 @@ export const TrafficMap = ({ hotspots = [], impact, policeStationName }: Traffic
 
   const affectedPath: [number, number][] = hasImpact
     ? [
-        [center[0] - 0.012, center[1] - 0.015],
-        [center[0] - 0.004, center[1] - 0.005],
-        [center[0], center[1]],
-        [center[0] + 0.006, center[1] + 0.008],
-        [center[0] + 0.015, center[1] + 0.015],
-      ]
+      [center[0] - 0.012, center[1] - 0.015],
+      [center[0] - 0.004, center[1] - 0.005],
+      [center[0], center[1]],
+      [center[0] + 0.006, center[1] + 0.008],
+      [center[0] + 0.015, center[1] + 0.015],
+    ]
     : [];
 
   const diversionPath: [number, number][] = hasImpact
     ? [
-        [center[0] - 0.012, center[1] - 0.015],
-        [center[0] - 0.018, center[1] - 0.005],
-        [center[0] - 0.015, center[1] + 0.01],
-        [center[0] + 0.005, center[1] + 0.022],
-        [center[0] + 0.015, center[1] + 0.015],
-      ]
+      [center[0] - 0.012, center[1] - 0.015],
+      [center[0] - 0.018, center[1] - 0.005],
+      [center[0] - 0.015, center[1] + 0.01],
+      [center[0] + 0.005, center[1] + 0.022],
+      [center[0] + 0.015, center[1] + 0.015],
+    ]
     : [];
 
   const stationLocation: [number, number] | null = hasImpact
@@ -125,55 +166,72 @@ export const TrafficMap = ({ hotspots = [], impact, policeStationName }: Traffic
   return (
     <div
       style={{
-        position: 'relative',
-        borderRadius: 'var(--radius-card)',
+        position: isFullscreen ? 'fixed' : 'relative',
+        top: isFullscreen ? 0 : undefined,
+        left: isFullscreen ? 0 : undefined,
+        right: isFullscreen ? 0 : undefined,
+        bottom: isFullscreen ? 0 : undefined,
+        zIndex: isFullscreen ? 9999 : 1,
+        borderRadius: isFullscreen ? '0' : 'var(--radius-card)',
         overflow: 'hidden',
-        border: '1px solid var(--border)',
-        height: '680px',
+        border: isFullscreen ? 'none' : '1px solid var(--border)',
+        height: isFullscreen ? '100vh' : '680px',
+        width: isFullscreen ? '100vw' : '100%',
         boxShadow: '0 32px 80px rgba(0,0,0,0.5)',
       }}
     >
-      <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 1000, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div ref={panelRef} style={{ position: 'absolute', top: 12, right: 12, zIndex: 1000, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <button
           onClick={() => setPanelOpen(!panelOpen)}
+          title="Map Layers & Styles"
           style={{
             width: '42px', height: '42px', borderRadius: 'var(--radius-md)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(15,22,35,0.9)', backdropFilter: 'blur(12px)',
-            border: '1px solid var(--border)', cursor: 'pointer', color: 'var(--text)',
+            background: panelOpen ? '#3B82F6' : 'rgba(15,22,35,0.9)', backdropFilter: 'blur(12px)',
+            border: '1px solid var(--border)', cursor: 'pointer', color: panelOpen ? '#FFF' : 'var(--text)',
+            transition: 'all 0.2s',
           }}
         >
           <LayersIcon size={18} />
         </button>
         <button
+          onClick={handleCenter}
+          title="Center Map"
           style={{
             width: '42px', height: '42px', borderRadius: 'var(--radius-md)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             background: 'rgba(15,22,35,0.9)', backdropFilter: 'blur(12px)',
             border: '1px solid var(--border)', cursor: 'pointer', color: 'var(--text)',
+            transition: 'all 0.2s',
           }}
         >
           <Crosshair size={18} />
         </button>
         <button
+          onClick={handleReset}
+          title="Reset Map"
           style={{
             width: '42px', height: '42px', borderRadius: 'var(--radius-md)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             background: 'rgba(15,22,35,0.9)', backdropFilter: 'blur(12px)',
             border: '1px solid var(--border)', cursor: 'pointer', color: 'var(--text)',
+            transition: 'all 0.2s',
           }}
         >
           <RotateCcw size={16} />
         </button>
         <button
+          onClick={handleFullscreen}
+          title="Toggle Fullscreen"
           style={{
             width: '42px', height: '42px', borderRadius: 'var(--radius-md)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             background: 'rgba(15,22,35,0.9)', backdropFilter: 'blur(12px)',
             border: '1px solid var(--border)', cursor: 'pointer', color: 'var(--text)',
+            transition: 'all 0.2s',
           }}
         >
-          <Maximize2 size={16} />
+          {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
         </button>
 
         <AnimatePresence>
@@ -253,10 +311,11 @@ export const TrafficMap = ({ hotspots = [], impact, policeStationName }: Traffic
 
       <MapContainer
         center={center}
-        zoom={12}
+        zoom={defaultZoom}
         style={{ height: '100%', width: '100%', background: '#09090b' }}
         zoomControl={false}
         scrollWheelZoom={true}
+        ref={setMap}
       >
         <TileLayer
           key={mapStyle}
@@ -265,7 +324,7 @@ export const TrafficMap = ({ hotspots = [], impact, policeStationName }: Traffic
           maxZoom={20}
         />
 
-        <MapUpdater center={center} zoom={hasImpact ? 13 : 12} />
+        <MapUpdater center={center} zoom={defaultZoom} />
 
         {layers.hotspots &&
           hotspots.map((h, i) => (
@@ -324,6 +383,7 @@ export const TrafficMap = ({ hotspots = [], impact, policeStationName }: Traffic
           position: 'absolute', bottom: 16, left: 16,
           display: 'flex', gap: '0.5rem', zIndex: 1000,
           flexWrap: 'wrap',
+          maxWidth: 'calc(100% - 32px)',
         }}>
           {[
             { color: '#EF4444', label: 'Congested Route' },

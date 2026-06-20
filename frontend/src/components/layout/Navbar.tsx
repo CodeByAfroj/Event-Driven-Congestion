@@ -26,7 +26,7 @@ export const Navbar = () => {
     >
       <div style={{
         maxWidth: '1600px', margin: '0 auto',
-        padding: '0 1.75rem',
+        padding: '0 1rem',
         height: '72px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         gap: '1rem',
@@ -55,26 +55,28 @@ export const Navbar = () => {
               color: 'var(--muted)',
               fontWeight: 500,
               letterSpacing: '0.04em',
-            }}>Traffic Command Center</div>
+            }} className="hidden sm:block">Traffic Command Center</div>
           </div>
         </div>
 
         {/* Center live badge */}
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: '0.5rem',
-          padding: '0.5rem 1.25rem', borderRadius: '999px',
-          background: 'rgba(59,130,246,0.08)',
-          border: '1px solid rgba(59,130,246,0.18)',
-        }} className="hidden md:flex">
-          <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 2.2 }}>
-            <Zap size={14} color="#3B82F6" />
-          </motion.div>
-          <span style={{
-            fontSize: 'var(--font-xs)',
-            fontWeight: 700,
-            letterSpacing: '0.12em',
-            color: '#3B82F6',
-          }}>LIVE OPERATIONS</span>
+        <div className="hidden md:block">
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            padding: '0.5rem 1.25rem', borderRadius: '999px',
+            background: 'rgba(59,130,246,0.08)',
+            border: '1px solid rgba(59,130,246,0.18)',
+          }}>
+            <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 2.2 }}>
+              <Zap size={14} color="#3B82F6" />
+            </motion.div>
+            <span style={{
+              fontSize: 'var(--font-xs)',
+              fontWeight: 700,
+              letterSpacing: '0.12em',
+              color: '#3B82F6',
+            }}>LIVE OPERATIONS</span>
+          </div>
         </div>
 
         {/* Right: status + clock */}
@@ -100,23 +102,25 @@ export const Navbar = () => {
               fontSize: 'var(--font-sm)',
               fontWeight: 600,
               color: isOnline ? '#10B981' : '#EF4444',
-            }}>{isOnline ? 'System Online' : 'Offline'}</span>
+            }} className="hidden sm:block">{isOnline ? 'System Online' : 'Offline'}</span>
           </div>
 
           {/* Clock */}
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
-            padding: '0.5rem 0.875rem',
-            borderRadius: 'var(--radius-md)',
-            background: 'var(--bg-raised)',
-            border: '1px solid var(--border)',
-          }} className="hidden sm:flex">
-            <Radio size={13} style={{ color: 'var(--muted)' }} />
-            <span className="font-mono" style={{
-              fontSize: 'var(--font-xs)',
-              color: 'var(--muted)',
-              fontWeight: 500,
-            }}>{time}</span>
+          <div className="hidden sm:block">
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '0.5rem',
+              padding: '0.5rem 0.875rem',
+              borderRadius: 'var(--radius-md)',
+              background: 'var(--bg-raised)',
+              border: '1px solid var(--border)',
+            }}>
+              <Radio size={13} style={{ color: 'var(--muted)' }} />
+              <span className="font-mono" style={{
+                fontSize: 'var(--font-xs)',
+                color: 'var(--muted)',
+                fontWeight: 500,
+              }}>{time}</span>
+            </div>
           </div>
         </div>
       </div>

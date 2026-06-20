@@ -129,7 +129,7 @@ export const PredictionForm = ({ onSubmit, isLoading }: PredictionFormProps) => 
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+      <div className="grid-2col" style={{ gap: '1rem' }}>
         <CustomSelect label="Event Type" options={EVENT_TYPES} value={form.event_type} onChange={set('event_type')} />
         <CustomSelect label="Event Cause" options={EVENT_CAUSES} value={form.event_cause} onChange={set('event_cause')} searchable />
         <CustomSelect label="Road Closure" options={ROAD_CLOSURE} value={form.requires_road_closure} onChange={set('requires_road_closure')} />

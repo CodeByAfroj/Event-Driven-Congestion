@@ -116,15 +116,7 @@ export const ImpactCommunication = ({
 
       {/* KPI CARDS */}
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(4,1fr)",
-          gap: "1rem",
-          padding: "1.5rem",
-        }}
-      >
+      <div className="grid-kpi" style={{ padding: "1.5rem" }}>
         {[
           {
             title: "Impact Radius",

@@ -85,7 +85,7 @@ export const Dashboard = () => {
               {/* ── 3. IMPACT MAP + FORM ── */}
               <div>
                 <SectionLabel>Impact Map & Incident Configuration</SectionLabel>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '1.5rem', alignItems: 'start' }}>
+                <div className="grid-map" style={{ alignItems: 'start' }}>
                   <div>
                     {hotspotsError ? (
                       <div style={{
@@ -117,7 +117,7 @@ export const Dashboard = () => {
               </div> */}
 
               {/* ── 5. SIMULATION CENTER + WHY AI ── */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+              <div className="grid-2col">
                 <SimulationCenter prediction={prediction} />
                 <WhyAIRecommended prediction={prediction} />
               </div>
@@ -145,7 +145,7 @@ export const Dashboard = () => {
             <div style={{ marginBottom: '1.5rem' }}>
               <SectionLabel>Configure Incident & Generate Response</SectionLabel>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '1.5rem', alignItems: 'start' }}>
+            <div className="grid-map" style={{ alignItems: 'start' }}>
               <div>
                 {hotspotsLoading ? (
                   <Skeleton h={560} />
@@ -238,7 +238,7 @@ export const Dashboard = () => {
                           </div>
                         ))}
                       </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                      <div className="grid-2col">
                         <EventCauseChart data={trendsData.top_event_causes} />
                         <ZoneDistributionChart data={trendsData.zone_distribution} />
                       </div>

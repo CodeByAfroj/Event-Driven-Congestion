@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import { Dashboard } from '@/pages/Dashboard';
 
 const queryClient = new QueryClient({
@@ -19,6 +20,7 @@ function App() {
         <main>
           <Dashboard />
         </main>
+        <Footer />
       </div>
     </QueryClientProvider>
   );

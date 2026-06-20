@@ -4,9 +4,16 @@ import type { PredictResponse } from '@/types';
 
 export const PublicAdvisory = ({ prediction }: { prediction: PredictResponse }) => {
   const impact = prediction.impact_analysis;
-  const delay = Number(prediction.commander?.expected_delay || 89);
-  const reduction = Number(prediction.commander?.expected_reduction || 65);
-  const mitigated = Math.round(delay * (1 - reduction / 100));
+
+  const delay = Number(prediction?.commander?.expected_delay ?? 89);
+
+  const reduction = parseFloat(
+    String(prediction?.commander?.expected_reduction ?? '65').replace('%', '')
+  );
+
+  const mitigated = Math.round(
+    delay * (1 - reduction / 100)
+  );
 
   const advisoryText = `PUBLIC TRAFFIC ADVISORY\n\nHeavy congestion is expected near ${impact?.affected_junctions?.[0] || 'the identified impact area'}.\n\nAffected Area: ${impact?.impact_radius_km || 2.63} km\nAffected Vehicles: ~${impact?.estimated_vehicle_impact?.toLocaleString() || '1,713'}\nExpected Delay: ${delay} minutes\n\nAvoid travel during peak hours.\nExpected clearance: ${mitigated} minutes after deployment.\n\nIssued by: Traffic Operations Command Center`;
 
@@ -63,8 +70,8 @@ export const PublicAdvisory = ({ prediction }: { prediction: PredictResponse }) 
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           {[
             { icon: <Copy size={14} />, label: 'Copy Advisory', action: copyAdvisory },
-            { icon: <Download size={14} />, label: 'Download', action: () => {} },
-            { icon: <Share2 size={14} />, label: 'Share', action: () => {} },
+            { icon: <Download size={14} />, label: 'Download', action: () => { } },
+            { icon: <Share2 size={14} />, label: 'Share', action: () => { } },
           ].map((btn, i) => (
             <button
               key={i}

@@ -69,7 +69,7 @@ export const AICommanderBriefing = ({ prediction }: { prediction: PredictRespons
         <Tag color="#10B981">Confidence: 92%</Tag>
       </div>
 
-      <div style={{ padding: '2rem', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem' }}>
+      <div className="grid-3col" style={{ padding: '2rem' }}>
 
         {/* Situation Overview */}
         <div style={{
