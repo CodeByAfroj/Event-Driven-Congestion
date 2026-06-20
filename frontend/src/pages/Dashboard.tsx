@@ -63,10 +63,16 @@ export const Dashboard = () => {
   }
 }, [prediction]);
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingTop: '82px' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingTop: '82px', position: 'relative', overflow: 'hidden' }}>
+      {/* Ambient Dribbble-style Glows */}
+      <div className="animate-blob" style={{ position: 'absolute', top: '5%', left: '10%', width: '600px', height: '600px', background: 'rgba(0, 240, 255, 0.04)', filter: 'blur(120px)', borderRadius: '50%', pointerEvents: 'none' }} />
+      <div className="animate-blob animation-delay-2000" style={{ position: 'absolute', top: '40%', right: '5%', width: '700px', height: '700px', background: 'rgba(0, 255, 157, 0.03)', filter: 'blur(140px)', borderRadius: '50%', pointerEvents: 'none' }} />
+      <div className="animate-blob animation-delay-4000" style={{ position: 'absolute', bottom: '0', left: '20%', width: '800px', height: '800px', background: 'rgba(255, 0, 85, 0.03)', filter: 'blur(160px)', borderRadius: '50%', pointerEvents: 'none' }} />
+
       <div style={{
-        maxWidth: '1600px', margin: '0 auto', padding: '2rem 1.75rem',
-        display: 'flex', flexDirection: 'column', gap: '2rem',
+        position: 'relative', zIndex: 1,
+        maxWidth: '1600px', margin: '0 auto', padding: '3rem 1.75rem',
+        display: 'flex', flexDirection: 'column', gap: '3rem',
       }}>
 
         {/* ── 1. MISSION STATUS BANNER ── */}
@@ -77,7 +83,7 @@ export const Dashboard = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}
             >
               {/* ── 2. AI COMMANDER BRIEFING ── */}
               <AICommanderBriefing prediction={prediction} />

@@ -103,8 +103,9 @@ export const PredictionForm = ({ onSubmit, isLoading }: PredictionFormProps) => 
       style={{
         borderRadius: 'var(--radius-card)',
         padding: '1.75rem',
-        background: 'var(--bg-card)',
+        background: 'linear-gradient(145deg, var(--bg-card) 0%, rgba(59, 130, 246, 0.03) 100%)',
         border: '1px solid var(--border)',
+        boxShadow: '0 16px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
         display: 'flex',
         flexDirection: 'column',
         gap: '1.5rem',
@@ -162,7 +163,7 @@ export const PredictionForm = ({ onSubmit, isLoading }: PredictionFormProps) => 
           color: 'white',
           border: 'none',
           cursor: isLoading ? 'not-allowed' : 'pointer',
-          boxShadow: isLoading ? 'none' : '0 4px 24px rgba(59,130,246,0.3)',
+          boxShadow: isLoading ? 'none' : '0 0 20px rgba(59,130,246,0.4), inset 0 1px 0 rgba(255,255,255,0.2)',
         }}
       >
         {isLoading ? (

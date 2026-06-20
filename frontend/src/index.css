@@ -5,25 +5,25 @@
    DESIGN SYSTEM TOKENS
 ───────────────────────────────────────────── */
 :root {
-  --bg-primary: #07090F;
-  --bg-card: #0F1623;
-  --bg-card-hover: #141E2E;
-  --bg-raised: #192231;
+  --bg-primary: #030509;
+  --bg-card: #0A101A;
+  --bg-card-hover: #0F1725;
+  --bg-raised: #111A29;
   --border: #1E2D42;
   --border-subtle: #131E2D;
-  --border-bright: #253548;
-  --primary: #3B82F6;
-  --primary-glow: rgba(59, 130, 246, 0.18);
-  --success: #10B981;
-  --success-glow: rgba(16, 185, 129, 0.18);
-  --warning: #F59E0B;
-  --warning-glow: rgba(245, 158, 11, 0.18);
-  --danger: #EF4444;
-  --danger-glow: rgba(239, 68, 68, 0.18);
-  --text: #F1F5F9;
+  --border-bright: #2A3C58;
+  --primary: #00F0FF; /* Neon Cyan */
+  --primary-glow: rgba(0, 240, 255, 0.25);
+  --success: #00FF9D; /* Neon Green */
+  --success-glow: rgba(0, 255, 157, 0.25);
+  --warning: #FF9900; /* Vibrant Orange */
+  --warning-glow: rgba(255, 153, 0, 0.25);
+  --danger: #FF0055; /* Neon Pink/Red */
+  --danger-glow: rgba(255, 0, 85, 0.25);
+  --text: #F8FAFC;
   --text-secondary: #CBD5E1;
   --muted: #94A3B8;
-  --muted-dark: #64748B;
+  --muted-dark: #475569;
 
   /* ── Police-friendly font scale ── */
   --font-xs: 0.8125rem;    /* 13px */
@@ -81,17 +81,19 @@ body {
    GLASS MORPHISM
 ───────────────────────────────────────────── */
 .glass {
-  background: rgba(15, 22, 35, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(30, 45, 66, 0.9);
+  background: rgba(10, 16, 26, 0.65);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 .glass-strong {
-  background: rgba(15, 22, 35, 0.95);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(59, 130, 246, 0.12);
+  background: rgba(10, 16, 26, 0.85);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
 }
 
 /* ─────────────────────────────────────────────
@@ -195,9 +197,28 @@ body {
 /* ─────────────────────────────────────────────
    GLOW SHADOWS
 ───────────────────────────────────────────── */
-.glow-blue  { box-shadow: 0 0 40px rgba(59,130,246,0.18), 0 0 80px rgba(59,130,246,0.06); }
-.glow-green { box-shadow: 0 0 40px rgba(16,185,129,0.18), 0 0 80px rgba(16,185,129,0.06); }
-.glow-red   { box-shadow: 0 0 40px rgba(239,68,68,0.18),  0 0 80px rgba(239,68,68,0.06);  }
+.glow-blue  { box-shadow: 0 0 40px rgba(0,240,255,0.2), 0 0 80px rgba(0,240,255,0.1); }
+.glow-green { box-shadow: 0 0 40px rgba(0,255,157,0.2), 0 0 80px rgba(0,255,157,0.1); }
+.glow-red   { box-shadow: 0 0 40px rgba(255,0,85,0.2),  0 0 80px rgba(255,0,85,0.1);  }
+
+/* ─────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────── */
+@keyframes blob {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+.animate-blob {
+  animation: blob 7s infinite;
+}
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
 
 /* ─────────────────────────────────────────────
    MONO FONT

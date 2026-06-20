@@ -76,7 +76,9 @@ def predict(event: EventInput):
     recommendations = (
         generate_recommendations(
             risk,
-            historical_stats
+            historical_stats,
+            optimization,
+            simulation
         )
     )
     impact_analysis = (

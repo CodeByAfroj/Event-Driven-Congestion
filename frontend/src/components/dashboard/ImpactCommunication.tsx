@@ -56,11 +56,11 @@ export const ImpactCommunication = ({
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       style={{
-        borderRadius: "28px",
+        borderRadius: "var(--radius-card)",
         overflow: "hidden",
-        background: "#08111F",
-        border:
-          "1px solid rgba(59,130,246,.15)",
+        background: "linear-gradient(145deg, var(--bg-card) 0%, rgba(245, 158, 11, 0.03) 100%)",
+        border: "1px solid var(--border)",
+        boxShadow: "0 16px 40px rgba(0,0,0,0.4)",
       }}
     >
       {/* HEADER */}
@@ -146,15 +146,14 @@ export const ImpactCommunication = ({
         ].map((item, index) => (
           <motion.div
             key={index}
-            whileHover={{
-              y: -3,
-            }}
+            whileHover={{ y: -4, boxShadow: `0 8px 32px ${item.color}25, inset 0 1px 0 rgba(255,255,255,0.1)` }}
             style={{
               padding: "1.25rem",
-              borderRadius: "20px",
-              background: "#0D1728",
-              border:
-                "1px solid rgba(255,255,255,.06)",
+              borderRadius: "var(--radius-lg)",
+              background: `linear-gradient(145deg, rgba(15,22,35,0.6) 0%, ${item.color}0A 100%)`,
+              border: `1px solid ${item.color}25`,
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
+              backdropFilter: "blur(10px)",
             }}
           >
             <div
@@ -252,8 +251,9 @@ export const ImpactCommunication = ({
             }}
             style={{
               height: "100%",
-              background:
-                severityColor,
+              background: severityColor,
+              boxShadow: `0 0 20px ${severityColor}`,
+              borderRadius: 999,
             }}
           />
         </div>

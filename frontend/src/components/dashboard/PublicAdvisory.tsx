@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Megaphone, Copy, Download, Share2 } from 'lucide-react';
+import { Megaphone, Copy, Download, Share2, Check } from 'lucide-react';
 import type { PredictResponse } from '@/types';
 
 export const PublicAdvisory = ({ prediction }: { prediction: PredictResponse }) => {
@@ -17,7 +18,44 @@ export const PublicAdvisory = ({ prediction }: { prediction: PredictResponse }) 
 
   const advisoryText = `PUBLIC TRAFFIC ADVISORY\n\nHeavy congestion is expected near ${impact?.affected_junctions?.[0] || 'the identified impact area'}.\n\nAffected Area: ${impact?.impact_radius_km || 2.63} km\nAffected Vehicles: ~${impact?.estimated_vehicle_impact?.toLocaleString() || '1,713'}\nExpected Delay: ${delay} minutes\n\nAvoid travel during peak hours.\nExpected clearance: ${mitigated} minutes after deployment.\n\nIssued by: Traffic Operations Command Center`;
 
-  const copyAdvisory = () => navigator.clipboard.writeText(advisoryText);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(advisoryText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy', err);
+    }
+  };
+
+  const handleDownload = () => {
+    const blob = new Blob([advisoryText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Traffic_Advisory_${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Public Traffic Advisory',
+          text: advisoryText,
+        });
+      } catch (err) {
+        console.log('Share failed or was cancelled', err);
+      }
+    } else {
+      window.location.href = `mailto:?subject=Public Traffic Advisory&body=${encodeURIComponent(advisoryText)}`;
+    }
+  };
 
   return (
     <motion.div
@@ -69,9 +107,9 @@ export const PublicAdvisory = ({ prediction }: { prediction: PredictResponse }) 
 
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           {[
-            { icon: <Copy size={14} />, label: 'Copy Advisory', action: copyAdvisory },
-            { icon: <Download size={14} />, label: 'Download', action: () => { } },
-            { icon: <Share2 size={14} />, label: 'Share', action: () => { } },
+            { icon: copied ? <Check size={14} color="#10B981" /> : <Copy size={14} />, label: copied ? 'Copied!' : 'Copy Advisory', action: handleCopy },
+            { icon: <Download size={14} />, label: 'Download', action: handleDownload },
+            { icon: <Share2 size={14} />, label: 'Share', action: handleShare },
           ].map((btn, i) => (
             <button
               key={i}

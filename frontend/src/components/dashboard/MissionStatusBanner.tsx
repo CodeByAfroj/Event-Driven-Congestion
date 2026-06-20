@@ -28,15 +28,20 @@ export const MissionStatusBanner = ({ prediction }: { prediction?: PredictRespon
   return (
     <motion.div
       initial={{ opacity: 0, y: -16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      animate={{ opacity: 1, y: 0, backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+      transition={{ 
+        duration: 0.6, ease: [0.16, 1, 0.3, 1], 
+        backgroundPosition: { duration: 8, repeat: Infinity, ease: 'linear' } 
+      }}
       style={{
         position: 'relative', overflow: 'hidden',
         borderRadius: 'var(--radius-card)',
-        border: `1px solid ${isLive ? riskColor + '40' : 'var(--border)'}`,
+        border: `1px solid ${isLive ? riskColor + '50' : 'var(--border)'}`,
         background: isLive
-          ? `linear-gradient(135deg, rgba(15,22,35,0.98) 0%, ${riskColor}08 100%)`
-          : 'var(--bg-card)',
+          ? `linear-gradient(270deg, rgba(10,16,26,0.95) 0%, ${riskColor}15 50%, rgba(10,16,26,0.95) 100%)`
+          : 'linear-gradient(145deg, var(--bg-card) 0%, rgba(59, 130, 246, 0.03) 100%)',
+        backgroundSize: '200% 200%',
+        boxShadow: isLive ? `0 0 40px ${riskColor}15` : '0 16px 40px rgba(0,0,0,0.4)',
       }}
     >
       {/* Ambient glow */}
@@ -98,8 +103,9 @@ export const MissionStatusBanner = ({ prediction }: { prediction?: PredictRespon
           <div style={{
             fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 900,
             letterSpacing: '-0.03em', color: 'var(--text)', lineHeight: 1.1,
+            textTransform: 'capitalize'
           }}>
-            {isLive ? (prediction?.commander?.summary?.split(' ').slice(0, 3).join(' ') || 'Vehicle Breakdown') : 'Traffic Command'}
+            {isLive ? (prediction?.impact_analysis?.event_cause || 'Vehicle Breakdown') : 'Traffic Command'}
           </div>
           {isLive && (
             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.875rem', flexWrap: 'wrap' }}>
