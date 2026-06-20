@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { HotspotsResponse, TrendsResponse, PredictRequest, PredictResponse } from '@/types';
 
-const BASE_URL = '/api';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
 
 export const api = axios.create({
   baseURL: BASE_URL,
