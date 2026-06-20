@@ -78,6 +78,10 @@ cd frontend
 # Install Node modules
 npm install
 
+# Configure Environment Variables
+# Create a .env file in the frontend directory and add the backend URL:
+# VITE_BACKEND_URL=http://localhost:8000
+
 # Start the Vite development server
 npm run dev
 ```
