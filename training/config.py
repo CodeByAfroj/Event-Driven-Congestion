@@ -26,3 +26,4 @@ FEATURES = [
 ]
 
 MODEL_PATH = "models/risk_model.pkl"
+
