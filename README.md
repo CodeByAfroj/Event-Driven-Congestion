@@ -59,6 +59,10 @@ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 # Install dependencies
 pip install -r requirements.txt
 
+# Configure Environment Variables
+# Create a .env file in the backend directory and add your Groq API key:
+# GROQ_API_KEY=your_groq_api_key_here
+
 # Run the FastAPI server
 uvicorn main:app --reload --port 8000
 ```
