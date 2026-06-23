@@ -9,7 +9,6 @@ def generate_commander_briefing(risk, historical_stats, optimization, simulation
     corridor = recommendations.get("critical_corridor", "Unknown")
     best_scenario = simulation[-1]
 
-    # Hardcoded Fallback Logic
     fallback_briefing = f"""EVENT AI COMMANDER REPORT
 
 Risk Assessment
