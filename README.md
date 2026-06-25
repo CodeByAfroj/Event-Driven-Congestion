@@ -10,7 +10,7 @@ Event AI is an advanced, enterprise-grade command center application built for o
 
 - **Spatial Visualization Map**: Real-time Interactive mapping with hotspots, epicenters, optimal police stations, and multi-layer rendering .
 
-- **AI Commander Copilot**: Generates automated tactical operations directives, risk evaluations, and exact officer/barricade deployment counts based on incident parameters.
+- **AI Commander Copilot**: Generates automated tactical operations directives, risk evaluations, and exact officer/barricade deployment counts based on incident parameters
 
 - **Delay Mitigation Simulation**: Models the statistical impact of "No Action" vs "Diversions" vs "Full Response" to visualize efficiency gains.
 
